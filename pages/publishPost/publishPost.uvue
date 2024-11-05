@@ -2,15 +2,16 @@
 	<!-- #ifdef APP -->
 	<scroll-view style="flex:1">
 	<!-- #endif -->
-		<text>我的</text>
+		
 	<!-- #ifdef APP -->
 	</scroll-view>
 	<!-- #endif -->
 </template>
 
 <script setup>
+		
 </script>
 
 <style>
-
+		
 </style>

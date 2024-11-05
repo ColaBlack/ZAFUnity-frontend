@@ -1,14 +1,28 @@
 <template>
-	<view id="welcome-page">
-		<wd-search class="search-bar" placeholder-left v-model="searchForm" @search="handleSearch" hide-cancel />
-	</view>
+	<!-- #ifdef APP -->
+	<scroll-view style="flex:1">
+	<!-- #endif -->
+		<view id="welcome-page">
+			<uni-search-bar @confirm="handleSearch" v-model="searchForm" placeholder="搜索" />
+		</view>
+	<!-- #ifdef APP -->
+	</scroll-view>
+	<!-- #endif -->
 </template>
 
 <script setup lang="uts">
 	const searchForm = ref<String>("")
 
-	const handleSearch = () => {
-		console.log(searchForm.value)
+	const handleSearch = async () => {
+		const res = await uni.request({
+			"url": "http://localhost:1223/api/post/search",
+			"method": "GET",
+			"data": {
+				"keyword": searchForm.value
+			},
+			"withCredentials":true
+		})
+		console.log(res)
 	}
 	onMounted(handleSearch)
 </script>
