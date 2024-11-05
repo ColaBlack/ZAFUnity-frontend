@@ -1,26 +1,17 @@
 <template>
-	<view>
-		<image class="logo" src="/static/logo.png"></image>
-		<view class="text-area">
-			<text class="title">{{title}}</text>
-		</view>
+	<view id="welcome-page">
+		<wd-search class="search-bar" placeholder-left v-model="searchForm" @search="handleSearch" hide-cancel />
 	</view>
 </template>
 
 <script setup lang="uts">
-	const title : String = 'hello'
+	const searchForm = ref<String>("okkk")
+
+	const handleSearch = () => {
+		console.log(searchForm.value)
+	}
+	onMounted(handleSearch)
 </script>
 
 <style>
-	.logo {
-		height: 100px;
-		width: 100px;
-		margin: 100px auto 25px auto;
-	}
-
-	.title {
-		font-size: 18px;
-		color: #8f8f94;
-		text-align: center;
-	}
 </style>
