@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="uts">
-	const searchForm = ref<String>("okkk")
+	const searchForm = ref<String>("")
 
 	const handleSearch = () => {
 		console.log(searchForm.value)
