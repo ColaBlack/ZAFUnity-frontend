@@ -14,25 +14,33 @@
 		{
 			"path": "pages/publishPost/publishPost",
 			"style": {
-				"navigationBarTitleText": ""
+				"navigationBarTitleText": "发布帖子"
 			}
 		},
 		{
 			"path" : "pages/login/login",
 			"style" : 
 			{
-				"navigationBarTitleText" : ""
+				"navigationBarTitleText" : "登录"
+			}
+		},
+		{
+			"path" : "pages/register/register",
+			"style" : 
+			{
+				"navigationBarTitleText" : "注册"
 			}
 		}
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "林友汇",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"navigationBarBackgroundColor": "#f8f8f8",
+		"backgroundColor": "#f8f8f8"
 	},
 	"uniIdRouter": {},
 	"tabBar": {
+		"backgroundColor": "#f8f8f8",
 		"selectedColor": "#3CB371",
 		"list": [{
 				"pagePath": "pages/index/index",

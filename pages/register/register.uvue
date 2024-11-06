@@ -1,0 +1,80 @@
+<template>
+	<!-- #ifdef APP -->
+	<scroll-view style="flex:1">
+	<!-- #endif -->
+		<view id="register-page">
+			<wd-form :model="registerForm">
+				<wd-cell-group class="register-form" border style="padding: 20rpx">
+					<wd-input label="用户名" label-width="100px" prop="userAccount" clearable
+						v-model="registerForm.userAccount" placeholder="请输入用户名"
+						:rules="[{ required: true, message: '请填写用户名' }]" />
+					<view style="margin-top: 20rpx;"></view>
+					<wd-input label="密码" label-width="100px" prop="password" show-password clearable
+						v-model="registerForm.password" placeholder="请输入密码"
+						:rules="[{ required: true, message: '请填写密码' }]" />
+					<wd-input label="再次输入密码" label-width="100px" prop="checkPassword" show-password clearable
+						v-model="registerForm.checkPassword" placeholder="请输入密码"
+						:rules="[{ required: true, message: '请再次填写密码确认' }]" />
+					<wd-input label="邮箱" label-width="100px" prop="email" clearable v-model="registerForm.email"
+						placeholder="请输入邮箱" :rules="[{ required: true, message: '请输入邮箱' }]" />
+					<wd-input label="验证码" label-width="100px" prop="code" clearable v-model="registerForm.checkPassword"
+						placeholder="请输入验证码" :rules="[{ required: true, message: '请输入验证码' }]" />
+				</wd-cell-group>
+				<view class="footer" style="padding: 20rpx;">
+					<wd-button type="success" size="large" @click="">获取验证码</wd-button>
+					<view style="margin-top: 20rpx;"></view>
+					<wd-button type="primary" size="large" @click="handleSubmit" block>提交</wd-button>
+					<view style="margin-top: 20rpx;"></view>
+					<wd-button type="info" size="large" @click="toLogin" block>去登录</wd-button>
+				</view>
+			</wd-form>
+		</view>
+	<!-- #ifdef APP -->
+	</scroll-view>
+	<!-- #endif -->
+</template>
+
+<script setup>
+	import { reactive } from 'vue';
+
+	const registerForm = reactive({
+		userAccount: "",
+		password: "",
+		checkPassword: "",
+		email: "",
+		code: ""
+	});
+
+	const getCode = async () => {
+		const res = await uni.request({
+			url: "http://localhost:1221/api/user/sendEmail",
+			method: "GET",
+			data: {
+				userAccount: registerForm.userAccount,
+				email: registerForm.email
+			}
+		})
+	}
+
+	const handleSubmit = async () => {
+		const res = await uni.request({
+			url: "http://localhost:1221/api/user/register",
+			method: "POST",
+			data: registerForm,
+			withCredentials: true,
+			header: {
+				"Content-Type": "application/json"
+			}
+		});
+		if (res.data.code === 20000) {
+			await uni.redirectTo({ url: "/pages/login/login" })
+		}
+	};
+
+	const toLogin = async () => {
+		await uni.redirectTo({ url: "/pages/login/login" })
+	}
+</script>
+
+<style>
+</style>

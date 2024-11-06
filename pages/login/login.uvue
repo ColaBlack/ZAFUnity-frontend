@@ -3,17 +3,22 @@
 	<scroll-view style="flex:1">
 	<!-- #endif -->
 		<view id="login-page">
-			<uni-forms :rules="rules" :model="loginForm">
-				<uni-forms-item label="用户名" required name="userAccount">
-					<uni-easyinput type="text" v-model="loginForm.userAccount" placeholder="请输入用户名" />
-				</uni-forms-item>
-				<uni-forms-item label="密码" required name="userPassword">
-					<uni-easyinput v-model="loginForm.userPassword" placeholder="请输入密码" />
-				</uni-forms-item>
-			</uni-forms>
-			<button type="primary" @click="handleSubmit">提交</button>
-			<text>{{loginForm}}</text>
-			<text>{{loginForm.value}}</text>
+			<wd-form :model="loginForm">
+				<wd-cell-group class="login-form" border style="padding: 20rpx">
+					<wd-input label="用户名" label-width="100px" prop="userAccount" clearable
+						v-model="loginForm.userAccount" placeholder="请输入用户名"
+						:rules="[{ required: true, message: '请填写用户名' }]" />
+					<view style="margin-top: 20rpx;"></view>
+					<wd-input label="密码" label-width="100px" prop="password" show-password clearable
+						v-model="loginForm.password" placeholder="请输入密码"
+						:rules="[{ required: true, message: '请填写密码' }]" />
+				</wd-cell-group>
+				<view class="footer" style="padding: 20rpx;">
+					<wd-button type="primary" size="large" @click="handleSubmit" block>提交</wd-button>
+					<view style="margin-top: 20rpx;"></view>
+					<wd-button type="info" size="large" @click="toRegister" block>去注册</wd-button>
+				</view>
+			</wd-form>
 		</view>
 	<!-- #ifdef APP -->
 	</scroll-view>
@@ -21,43 +26,30 @@
 </template>
 
 <script setup>
-	import { ref } from 'vue';
+	import { reactive } from 'vue';
 
-	const loginForm = ref({
+	const loginForm = reactive({
 		userAccount: "",
-		userPassword: ""
-	})
-
-	const rules = {
-		userAccount: {
-			rules: [
-				{
-					required: true,
-					errorMessage: "账号不能为空"
-				}
-			]
-		},
-		userPassword: {
-			rules: [
-				{
-					required: true,
-					errorMessage: "密码不能为空"
-				}
-			]
-		}
-	}
+		password: ""
+	});
 
 	const handleSubmit = async () => {
-		uni.request({
+		const res = await uni.request({
 			url: "http://localhost:1221/api/user/login",
 			method: "POST",
-			data: loginForm.value,
+			data: loginForm,
 			withCredentials: true,
-		}).then(response => {
-			console.log(response);
-		}).catch(error => {
-			console.error(error);
+			header: {
+				"Content-Type": "application/json"
+			}
 		});
+		if (res.data.code === 20000) {
+			await uni.redirectTo({url:"/pages/index/index"})
+		}
+	};
+
+	const toRegister = async () => {
+		await uni.redirectTo({url:"/pages/register/register"})
 	}
 </script>
 

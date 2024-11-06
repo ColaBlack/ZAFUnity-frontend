@@ -2,16 +2,41 @@
 	<!-- #ifdef APP -->
 	<scroll-view style="flex:1">
 	<!-- #endif -->
-		
+		<view id="publish-page">
+			<wd-form :model="loginForm">
+				<wd-cell-group class="publish-form" border style="padding: 20rpx">
+					<wd-input label="标题" label-width="100px" prop="title" clearable v-model="publishForm.title"
+						placeholder="请输入标题" :rules="[{ required: true, message: '请填写标题' }]" />
+					<view style="margin-top: 20rpx;"></view>
+				</wd-cell-group>
+				<view class="footer" style="padding: 20rpx;">
+					<wd-button type="primary" size="large" @click="handleSubmit" block>发布</wd-button>
+				</view>
+			</wd-form>
+		</view>
 	<!-- #ifdef APP -->
 	</scroll-view>
 	<!-- #endif -->
 </template>
 
 <script setup>
-		
+	const publishForm = reactive({
+		title: ""
+	})
+
+	const handleSubmit = async () => {
+		const res = await uni.request({
+			url: "http://localhost:1223/api/post/publish",
+			method: "POST",
+			withCredentials: true,
+			data: publishForm
+		})
+		if (res.data.code === 20000) {
+			await uni.redirectTo({ url: "/pages/index/index" })
+		}
+	}
 </script>
 
 <style>
-		
+
 </style>

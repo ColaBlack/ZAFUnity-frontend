@@ -3,7 +3,7 @@
 	<scroll-view style="flex:1">
 	<!-- #endif -->
 		<view id="welcome-page">
-			<uni-search-bar @confirm="handleSearch" v-model="searchForm" placeholder="搜索" />
+			<wd-search v-model="searchForm" @search="handleSearch" hide-cancel placeholder-left />
 		</view>
 	<!-- #ifdef APP -->
 	</scroll-view>
@@ -11,8 +11,8 @@
 </template>
 
 <script setup lang="uts">
+	const dataList=ref([])
 	const searchForm = ref<String>("")
-
 	const handleSearch = async () => {
 		const res = await uni.request({
 			"url": "http://localhost:1223/api/post/search",
@@ -20,9 +20,11 @@
 			"data": {
 				"keyword": searchForm.value
 			},
-			"withCredentials":true
+			"withCredentials": true
 		})
-		console.log(res)
+		if(res.data.code===20000){
+			dataList.value=res
+		}
 	}
 	onMounted(handleSearch)
 </script>
