@@ -4,6 +4,7 @@
 	<!-- #endif -->
 		<view id="welcome-page">
 			<wd-search v-model="searchForm" @search="handleSearch" hide-cancel placeholder-left />
+
 		</view>
 	<!-- #ifdef APP -->
 	</scroll-view>
@@ -11,19 +12,19 @@
 </template>
 
 <script setup lang="uts">
-	const dataList=ref([])
+	const dataList = ref([])
 	const searchForm = ref<String>("")
 	const handleSearch = async () => {
 		const res = await uni.request({
-			"url": "http://localhost:1223/api/post/search",
+			"url": "http://localhost:1221/api/post/search",
 			"method": "GET",
 			"data": {
 				"keyword": searchForm.value
 			},
 			"withCredentials": true
 		})
-		if(res.data.code===20000){
-			dataList.value=res
+		if (res.data.code === 20000) {
+			dataList.value = res
 		}
 	}
 	onMounted(handleSearch)

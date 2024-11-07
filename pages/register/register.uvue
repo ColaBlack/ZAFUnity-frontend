@@ -17,11 +17,11 @@
 						:rules="[{ required: true, message: '请再次填写密码确认' }]" />
 					<wd-input label="邮箱" label-width="100px" prop="email" clearable v-model="registerForm.email"
 						placeholder="请输入邮箱" :rules="[{ required: true, message: '请输入邮箱' }]" />
-					<wd-input label="验证码" label-width="100px" prop="code" clearable v-model="registerForm.checkPassword"
+					<wd-input label="验证码" label-width="100px" prop="code" clearable v-model="registerForm.code"
 						placeholder="请输入验证码" :rules="[{ required: true, message: '请输入验证码' }]" />
 				</wd-cell-group>
 				<view class="footer" style="padding: 20rpx;">
-					<wd-button type="success" size="large" @click="">获取验证码</wd-button>
+					<wd-button type="success" size="large" @click="getCode">获取验证码</wd-button>
 					<view style="margin-top: 20rpx;"></view>
 					<wd-button type="primary" size="large" @click="handleSubmit" block>提交</wd-button>
 					<view style="margin-top: 20rpx;"></view>
