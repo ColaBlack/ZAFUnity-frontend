@@ -8,7 +8,7 @@
 					<wd-input label="标题" label-width="100px" prop="title" clearable v-model="publishForm.title"
 						placeholder="请输入标题" :rules="[{ required: true, message: '请填写标题' }]" />
 					<view style="margin-top: 20rpx;"></view>
-					<wd-textarea label="帖子内容" clearable v-model="publishForm.content" placeholder="请输入..." required />
+					<wd-textarea label="帖子内容" clearable v-model="publishForm.content" placeholder="请输入..." required auto-height style="min-height: 500rpx;" />
 				</wd-cell-group>
 				<view class="footer" style="padding: 20rpx;">
 					<wd-button type="primary" size="large" @click="handleSubmit" block>发布</wd-button>
@@ -23,7 +23,8 @@
 <script setup>
 	const publishForm = reactive({
 		title: "",
-		content: ""
+		content: "",
+		tags: []
 	})
 
 	const handleSubmit = async () => {

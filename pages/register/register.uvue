@@ -66,8 +66,16 @@
 				"Content-Type": "application/json"
 			}
 		});
-		if (res.data.code === 20000) {
+		if (res.data.code === 200) {
+			uni.showToast({
+				title: "注册成功，即将跳转"
+			})
 			await uni.redirectTo({ url: "/pages/login/login" })
+		} else {
+			uni.showToast({
+				title: "注册失败："+res.data.message,
+				icon: "error"
+			})
 		}
 	};
 

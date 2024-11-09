@@ -30,12 +30,19 @@
 			{
 				"navigationBarTitleText" : "注册"
 			}
+		},
+		{
+			"path" : "pages/postDetail/postDetail",
+			"style" : 
+			{
+				"navigationBarTitleText" : "帖子详情"
+			}
 		}
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "林友汇",
-		"navigationBarBackgroundColor": "#f8f8f8",
+		"navigationBarBackgroundColor": "#ffffff",
 		"backgroundColor": "#f8f8f8"
 	},
 	"uniIdRouter": {},

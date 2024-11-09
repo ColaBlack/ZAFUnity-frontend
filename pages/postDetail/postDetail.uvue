@@ -1,0 +1,54 @@
+<template>
+	<!-- #ifdef APP -->
+	<scroll-view style="flex:1">
+	<!-- #endif -->
+		<view id="post-detail">
+			<wd-card style="margin-top: 40rpx;">
+				<template #title>
+					<h1 style="text-align: center;">{{postVO.title}}</h1>
+					<view style="background-color: black;height: 5rpx;margin-top: 5rpx;"></view>
+				</template>
+				<wd-textarea v-model="postVO.content" auto-height placeholder="嘿,你是怎么到这里来的？" readonly />
+				<template #footer>
+					<p>发布者ID：{{postVO.createrId}}</p>
+					<view style="display: inline;text-align: right;">
+						<p style="display: inline;">标签：</p>
+						<view v-for="(tag,index) in postVO.postTags" :key="index" style="display: inline;">
+							<wd-tag mark type="success">{{tag}}</wd-tag>
+						</view>
+					</view>
+					<p>点赞数：{{postVO.starts}}</p>
+					<p>发布时间：{{postVO.createTime}}</p>
+					<p>更新时间：{{postVO.updateTime}}</p>
+				</template>
+			</wd-card>
+		</view>
+	<!-- #ifdef APP -->
+	</scroll-view>
+	<!-- #endif -->
+</template>
+
+<script setup>
+	const currentPages = getCurrentPages()
+	const postId = currentPages[currentPages.length - 1].$page.options.post
+	const postVO = ref({})
+	onMounted(async () => {
+		const res = await uni.request({
+			url: "http://localhost:1221/api/post/get/vo/" + postId,
+			method: "GET"
+		})
+		if (res.data.code === 200) {
+			postVO.value = res.data.data
+		}
+		else {
+			uni.showToast({
+				title: "获取帖子失败：" + res.data.message,
+				icon: "error"
+			})
+		}
+	})
+</script>
+
+<style>
+
+</style>

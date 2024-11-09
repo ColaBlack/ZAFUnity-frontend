@@ -3,9 +3,24 @@
 	<scroll-view style="flex:1">
 	<!-- #endif -->
 		<view id="welcome-page">
-			<wd-search v-model="searchForm" @search="handleSearch" hide-cancel placeholder-left />
-
+			<wd-search v-model="searchForm" @search="handleSearch" light hide-cancel placeholder-left />
 		</view>
+		<view v-for="(item, index) in dataList" :key="index">
+			<wd-card :title="item.title">
+				{{item.content.slice(0, 25)}}
+				<view style="display: inline;text-align: right;">
+					<p style="display: inline;">标签：</p>
+					<view v-for="(tag,index) in item.postTags" :key="index" style="display: inline;">
+						<wd-tag mark type="success">{{tag}}</wd-tag>
+					</view>
+					<p>点赞数：{{item.starts}}</p>
+				</view>
+				<template #footer>
+					<wd-button @click="toPostDetail(item.id)" size="small" plain>查看详情</wd-button>
+				</template>
+			</wd-card>
+		</view>
+		<text>{{dataList.value}}</text>
 	<!-- #ifdef APP -->
 	</scroll-view>
 	<!-- #endif -->
@@ -19,13 +34,21 @@
 			"url": "http://localhost:1221/api/post/search",
 			"method": "GET",
 			"data": {
-				"keyword": searchForm.value
+				"keyword": searchForm.value,
+				"page": 1,
+				"size": 10
 			},
 			"withCredentials": true
 		})
-		if (res.data.code === 20000) {
-			dataList.value = res
+		if (res.data.code === 200) {
+			dataList.value = res.data.data || []
 		}
+	}
+
+	const toPostDetail = (PostId : String) => {
+		uni.navigateTo({
+			url: "/pages/postDetail/postDetail?post=" + PostId
+		})
 	}
 	onMounted(handleSearch)
 </script>

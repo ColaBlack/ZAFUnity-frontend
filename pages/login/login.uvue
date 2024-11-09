@@ -18,6 +18,7 @@
 					<view style="margin-top: 20rpx;"></view>
 					<wd-button type="info" size="large" @click="toRegister" block>去注册</wd-button>
 				</view>
+				<wd-toast />
 			</wd-form>
 		</view>
 	<!-- #ifdef APP -->
@@ -34,6 +35,7 @@
 	});
 
 	const handleSubmit = async () => {
+
 		const res = await uni.request({
 			url: "http://localhost:1221/api/user/login",
 			method: "POST",
@@ -43,13 +45,21 @@
 				"Content-Type": "application/json"
 			}
 		});
-		if (res.data.code === 20000) {
-			await uni.redirectTo({url:"/pages/index/index"})
+		if (res.data.code === 200) {
+			uni.showToast({
+				title: "登录成功，即将跳转"
+			})
+			await uni.switchTab({ url: "/pages/index/index" })
+		} else {
+			uni.showToast({
+				title: "登录失败："+res.data.message,
+				icon: "error"
+			})
 		}
 	};
 
 	const toRegister = async () => {
-		await uni.redirectTo({url:"/pages/register/register"})
+		await uni.redirectTo({ url: "/pages/register/register" })
 	}
 </script>
 
