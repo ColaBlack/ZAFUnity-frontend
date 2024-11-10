@@ -16,7 +16,11 @@
 
 #### 使用说明
 
-1.  需要和对应的后端联调，后端地址 [gitee地址](https://gitee.com/colablack/ZAFUnity)
+1. 需要和对应的后端联调，后端地址
+
+    [gitee地址](https://gitee.com/colablack/ZAFUnity)
+
+   [github地址]([ColaBlack/ZAFUnity-backend](https://github.com/ColaBlack/ZAFUnity-backend))
 
 #### 参与贡献
 
