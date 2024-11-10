@@ -35,7 +35,8 @@
 	onMounted(async () => {
 		const res = await uni.request({
 			url: "http://localhost:1221/api/post/get/vo/" + postId,
-			method: "GET"
+			method: "GET",
+			withCredentials: true
 		})
 		if (res.data.code === 200) {
 			postVO.value = res.data.data

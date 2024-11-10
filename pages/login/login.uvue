@@ -15,8 +15,10 @@
 				</wd-cell-group>
 				<view class="footer" style="padding: 20rpx;">
 					<wd-button type="primary" size="large" @click="handleSubmit" block>提交</wd-button>
-					<view style="margin-top: 20rpx;"></view>
+					<view style="margin-top: 20rpx;" />
 					<wd-button type="info" size="large" @click="toRegister" block>去注册</wd-button>
+					<view style="margin-top: 20rpx;" />
+					<wd-button type="info" size="large" @click="toWelcome" block>回到首页</wd-button>
 				</view>
 				<wd-toast />
 			</wd-form>
@@ -52,7 +54,7 @@
 			await uni.switchTab({ url: "/pages/index/index" })
 		} else {
 			uni.showToast({
-				title: "登录失败："+res.data.message,
+				title: "登录失败：" + res.data.message,
 				icon: "error"
 			})
 		}
@@ -60,6 +62,10 @@
 
 	const toRegister = async () => {
 		await uni.redirectTo({ url: "/pages/register/register" })
+	}
+
+	const toWelcome = async () => {
+		await uni.switchTab({ url: "/pages/index/index" })
 	}
 </script>
 

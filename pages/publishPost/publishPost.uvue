@@ -8,7 +8,8 @@
 					<wd-input label="标题" label-width="100px" prop="title" clearable v-model="publishForm.title"
 						placeholder="请输入标题" :rules="[{ required: true, message: '请填写标题' }]" />
 					<view style="margin-top: 20rpx;"></view>
-					<wd-textarea label="帖子内容" clearable v-model="publishForm.content" placeholder="请输入..." required auto-height style="min-height: 500rpx;" />
+					<wd-textarea label="帖子内容" clearable v-model="publishForm.content" placeholder="请输入..." required
+						auto-height style="min-height: 500rpx;" />
 				</wd-cell-group>
 				<view class="footer" style="padding: 20rpx;">
 					<wd-button type="primary" size="large" @click="handleSubmit" block>发布</wd-button>
@@ -34,10 +35,34 @@
 			withCredentials: true,
 			data: publishForm
 		})
-		if (res.data.code === 20000) {
-			await uni.redirectTo({ url: "/pages/index/index" })
+		if (res.data.code === 200) {
+			uni.showToast({
+				title: "发布成功",
+				icon: "success"
+			})
+			await uni.navigateTo({
+				url: "/pages/postDetail/postDetail?post=" + res.data.data
+			})
+		}else{
+			uni.showToast({
+				title: "发布失败："+res.data.message,
+				icon: "error"
+			})
 		}
 	}
+
+	onMounted(async () => {
+		const res = await uni.request({
+			url: "http://localhost:1221/api/user/get/UserVO",
+			method: "GET",
+			withCredentials: true
+		})
+		if (res.data.code === 40100) {
+			await uni.redirectTo({
+				url: "/pages/login/login"
+			})
+		}
+	})
 </script>
 
 <style>
